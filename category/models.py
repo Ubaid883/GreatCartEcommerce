@@ -6,3 +6,6 @@ class Categorie(models.Model):
     slug = models.SlugField(max_length=50, unique=True)
     description = models.TextField()
     file = models.ImageField(upload_to='images', blank=True)
+    
+    def __str__(self):
+        return self.category_name
