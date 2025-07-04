@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Product
 from category.models import Categorie
+from django.http import Http404
 
 
 # Create your views here.
@@ -20,3 +21,14 @@ def Store(request, category_slug=None):
         'prouduct_count': product_count
     }
     return render(request, 'store.html', context)
+
+
+def product_details(request,category_slug,product_slug):
+    try:
+        single_product = Product.objects.get(category__slug=category_slug,Slug=product_slug)
+    except Product.DoesNotExist:
+        raise Http404("Product not found.")
+    context ={
+        'single_product': single_product
+    }
+    return render(request, 'product-detail.html', context)
