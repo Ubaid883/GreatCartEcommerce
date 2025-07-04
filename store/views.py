@@ -18,17 +18,20 @@ def Store(request, category_slug=None):
     
     context ={
         'products':product,
-        'prouduct_count': product_count
+        'prouduct_count': product_count,
+       
     }
     return render(request, 'store.html', context)
 
 
 def product_details(request,category_slug,product_slug):
+   
     try:
         single_product = Product.objects.get(category__slug=category_slug,Slug=product_slug)
     except Product.DoesNotExist:
         raise Http404("Product not found.")
     context ={
-        'single_product': single_product
+        'single_product': single_product,
+         
     }
     return render(request, 'product-detail.html', context)
