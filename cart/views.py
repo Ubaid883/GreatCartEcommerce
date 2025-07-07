@@ -60,6 +60,8 @@ def delete_cart_itam(request, product_id):
 
 # Render Cart Page
 def cart(request, total=0,quantity=0,cart_iteams=None):
+    tax = 0
+    grand_total = 0
     try:
         cart =Cart.objects.get(cart_id = _cart_id(request))
         cart_iteams = CartIteam.objects.filter(cart=cart, is_active=True)

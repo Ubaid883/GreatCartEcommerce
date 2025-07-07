@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from .models import Product
 from category.models import Categorie
 from django.http import Http404
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 
 # Create your views here.
@@ -14,10 +15,13 @@ def Store(request, category_slug=None):
         product_count = product.count()
     else:
         product = Product.objects.all().filter(is_available=True)
+        paginator = Paginator(product, 5)  # Show 25 contacts per page.
+        page_number = request.GET.get("page")
+        page_obj = paginator.get_page(page_number)
         product_count = product.count()
     
     context ={
-        'products':product,
+        'products':page_obj,
         'prouduct_count': product_count,
        
     }
